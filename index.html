@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OMARCHY XMB Emulator</title>
+    <link rel="stylesheet" href="scss/main.css" />
+  </head>
+  <body>
+    <video class="back-vid" autoplay muted loop playsinline>
+      <source src="background.mp4" type="video/mp4" />
+    </video>
+    <div class="vignette"></div>
+
+    <div class="hud">
+      <div class="brand">OMARCHY</div>
+      <div class="clock-wrap">
+        <div class="clock-box"><span id="date">12:00 PM</span></div>
+      </div>
+    </div>
+
+    <div class="xmb-shell">
+      <div id="categoryBar" class="category-bar" aria-label="Main categories"></div>
+      <div id="itemPanel" class="item-panel" aria-label="Menu items"></div>
+      <div id="selectionStatus" class="selection-status">Home / Welcome</div>
+    </div>
+
+    <div id="achievementToast" class="achievement-toast tier-bronze" hidden>
+      <div class="achievement-trophy" aria-hidden="true"></div>
+      <div class="achievement-copy">
+        <strong id="achievementToastTitle">Achievement unlocked</strong>
+        <span id="achievementToastDetails">Welcome! - bronze trophy</span>
+      </div>
+    </div>
+
+    <div id="browserWindow" class="browser-window" hidden>
+      <div id="browserHeader" class="browser-header">
+        <div class="browser-title">Browser</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeBrowser" class="browser-close" type="button" aria-label="Close browser">×</button>
+        </div>
+      </div>
+      <div class="system-content">
+        <div class="google-mark">Google</div>
+        <p class="browser-prompt">Search the web</p>
+        <form id="browserSearchForm" class="google-search">
+          <label class="sr-only" for="googleQuery">Search</label>
+          <input id="googleQuery" type="text" placeholder="Search Google or enter a URL" />
+          <button type="submit">Go</button>
+        </form>
+        <div style="margin-top: 1rem; display: flex; justify-content: flex-end;">
+          <a href="https://www.google.com/doodles" class="lucky-button" target="_blank" rel="noreferrer">I'm Feeling Lucky</a>
+        </div>
+        <div style="margin-top: 1rem; height: 12rem; border: 1px solid rgba(185, 222, 255, 0.28); border-radius: 0.5rem; overflow: hidden; background: rgba(0,0,0,0.32);">
+          <iframe id="browserResultFrame" title="Browser result" src="https://www.google.com" style="width:100%; height:100%; border:0;"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div id="systemWindow" class="browser-window" hidden>
+      <div id="systemHeader" class="browser-header">
+        <div class="browser-title">System Overview</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeSystem" class="browser-close" type="button" aria-label="Close system">×</button>
+        </div>
+      </div>
+      <div class="system-content">
+        <div class="system-heading">Device Info</div>
+        <div id="systemDetails" class="spec-list"></div>
+      </div>
+    </div>
+
+    <div id="storageWindow" class="browser-window" hidden>
+      <div id="storageHeader" class="browser-header">
+        <div class="browser-title">Storage</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeStorage" class="browser-close" type="button" aria-label="Close storage">×</button>
+        </div>
+      </div>
+      <div class="system-content">
+        <div class="system-heading">Drive status</div>
+        <div id="storageDetails" class="spec-list"></div>
+      </div>
+    </div>
+
+    <div id="settingsWindow" class="browser-window" hidden>
+      <div id="settingsHeader" class="browser-header">
+        <div class="browser-title">Settings</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeSettings" class="browser-close" type="button" aria-label="Close settings">×</button>
+        </div>
+      </div>
+      <div class="system-content">
+        <div id="settingsTabList" class="settings-tabs"></div>
+        <div id="settingsContent" class="settings-content"></div>
+      </div>
+    </div>
+
+    <div id="gameLibraryWindow" class="browser-window game-library-window" hidden>
+      <div id="gameLibraryHeader" class="browser-header">
+        <div class="browser-title">Other Games</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeGameLibrary" class="browser-close" type="button" aria-label="Close game library">×</button>
+        </div>
+      </div>
+      <div class="game-library-content">
+        <button class="game-choice" data-game-title="NZP" data-game-url="https://nzp.gay/" type="button">
+          <span class="game-choice-title">NZP</span>
+          <span class="game-choice-subtitle">Arcade</span>
+        </button>
+        <button class="game-choice" data-game-title="Cookie Clicker" data-game-url="https://cookieclickerplay.github.io/#google_vignette" type="button">
+          <span class="game-choice-title">Cookie Clicker</span>
+          <span class="game-choice-subtitle">Idle Game</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="shopWindow" class="browser-window shop-window" hidden>
+      <div id="shopHeader" class="browser-header shop-header">
+        <div class="browser-title shop-title-text">PlayStation Store</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeShop" class="browser-close" type="button" aria-label="Close shop">×</button>
+        </div>
+      </div>
+
+      <div class="shop-content">
+        <div class="shop-shell">
+          <div class="shop-header-row">
+            <div class="shop-header-brand">
+              <div class="shop-brand-mark" aria-hidden="true"></div>
+              <h2 class="shop-brand">PLAYSTATION<span class="dot">.</span>Store</h2>
+            </div>
+
+            <div class="shop-header-tools">
+              <button class="shop-utility" type="button">View Downloads</button>
+              <button class="shop-utility small" type="button">My Account</button>
+            </div>
+          </div>
+
+          <div class="shop-mode-tabs" aria-label="Store categories">
+            <button class="shop-mode active" type="button"><span class="shop-glyph">🎮</span>Game</button>
+            <button class="shop-mode" type="button"><span class="shop-glyph">▣</span>Video</button>
+          </div>
+
+          <div class="shop-layout">
+            <nav class="shop-sidebar" aria-label="Store categories">
+              <button class="shop-menu-item active" type="button">Store Top</button>
+              <button class="shop-menu-item" type="button">Latest</button>
+              <button class="shop-menu-item" type="button">All Games</button>
+              <button class="shop-menu-item" type="button">Game Add-Ons</button>
+              <button class="shop-menu-item" type="button">PSP Games</button>
+              <button class="shop-menu-item" type="button">Family Games</button>
+              <button class="shop-menu-item" type="button">Videos</button>
+              <button class="shop-menu-item" type="button">Other Media</button>
+              <button class="shop-menu-item" type="button">We Recommend</button>
+            </nav>
+
+            <div class="shop-games-panel" aria-label="Games">
+              <div class="shop-feature-grid">
+                <div class="shop-feature-card feature-one">
+                  <div class="shop-card-art art-one"></div>
+                  <div class="shop-card-meta">
+                    <span class="rating">16+</span>
+                    <span class="price">£ 12.99</span>
+                  </div>
+                </div>
+                <div class="shop-feature-card feature-two">
+                  <div class="shop-card-art art-two"></div>
+                  <div class="shop-card-meta">
+                    <span class="rating">18+</span>
+                    <span class="price">£ 14.99</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="shop-footer-bar">
+            <div class="shop-footer-left">
+              <div class="shop-control"><span class="shop-circle"></span>Exit</div>
+              <div class="shop-control"><span class="shop-cross"></span>Enter</div>
+            </div>
+
+            <div class="shop-foot-select">SELECT</div>
+
+            <div class="shop-legal">About Us / Privacy Policy / Terms of Service<br />Health Warnings</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="gameWindow" class="browser-window game-window" hidden>
+      <div id="gameHeader" class="browser-header">
+        <div id="gameTitle" class="browser-title">Game</div>
+        <div class="browser-actions">
+          <button id="fullscreenGame" class="browser-control" type="button">▢</button>
+          <button id="closeGame" class="browser-close" type="button" aria-label="Close game">×</button>
+        </div>
+      </div>
+      <div class="game-content">
+        <iframe id="gameFrame" title="Game window" loading="lazy" allowfullscreen></iframe>
+        <a id="gameFallback" class="game-fallback" href="https://nzp.gay/" target="_blank" rel="noreferrer">Open in new tab</a>
+      </div>
+    </div>
+
+    <div id="n64LibraryWindow" class="browser-window game-library-window" hidden>
+      <div id="n64LibraryHeader" class="browser-header">
+        <div class="browser-title">N64 Games</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeN64Library" class="browser-close" type="button" aria-label="Close n64 library">×</button>
+        </div>
+      </div>
+      <div class="game-library-content">
+        <div id="n64GameList" class="window-list"></div>
+      </div>
+    </div>
+
+    <div id="n64GameWindow" class="browser-window game-window" hidden>
+      <div id="n64GameHeader" class="browser-header">
+        <div id="n64GameTitle" class="browser-title">N64 Game</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">▢</button>
+          <button id="closeN64Game" class="browser-close" type="button" aria-label="Close N64 emulator">×</button>
+        </div>
+      </div>
+      <div class="n64-game-content">
+        <div id="n64Emulator" class="n64-emulator"></div>
+        <div id="n64GameMessage" class="n64-game-message">
+          <strong>Select a ROM</strong>
+          <span>Choose a game from the library or load a ROM file to start playing.</span>
+          <label class="rom-picker" for="n64RomInput">Load ROM<input id="n64RomInput" type="file" accept=".n64,.z64,.v64,.zip" /></label>
+        </div>
+      </div>
+    </div>
+
+    <div id="snesWindow" class="browser-window" hidden>
+      <div id="snesHeader" class="browser-header">
+        <div class="browser-title">SNES</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeSnes" class="browser-close" type="button" aria-label="Close snes">×</button>
+        </div>
+      </div>
+      <div class="console-placeholder">
+        <strong>SNES Emulator</strong>
+        <span>System ready. Drop a ROM into the library when available.</span>
+      </div>
+    </div>
+
+    <div id="nesWindow" class="browser-window" hidden>
+      <div id="nesHeader" class="browser-header">
+        <div class="browser-title">NES</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeNes" class="browser-close" type="button" aria-label="Close nes">×</button>
+        </div>
+      </div>
+      <div class="console-placeholder">
+        <strong>NES Emulator</strong>
+        <span>System ready. Drop a ROM into the library when available.</span>
+      </div>
+    </div>
+
+    <div id="windowsPanel" class="browser-window windows-panel" hidden>
+      <div id="windowsHeader" class="browser-header">
+        <div class="browser-title">Windows</div>
+        <div class="browser-actions">
+          <button class="browser-control" type="button">_</button>
+          <button id="closeWindowsPanel" class="browser-close" type="button" aria-label="Close windows panel">×</button>
+        </div>
+      </div>
+      <div class="windows-content">
+        <div id="windowsList" class="window-list"></div>
+      </div>
+    </div>
+
+    <audio id="startup" preload="auto" src="audio/ps3-startup.mp3"></audio>
+    <audio id="nav" preload="auto" src="audio/ps3-nav.mp3"></audio>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
